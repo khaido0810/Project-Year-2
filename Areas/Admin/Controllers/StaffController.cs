@@ -4,11 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Project_Year_2.Areas.Admin.Infrastructure;
 using Project_Year_2.Models.Dao;
 using Project_Year_2.Models.EF;
 
 namespace Project_Year_2.Areas.Admin.Controllers
 {
+    [CustomAuthenticationFilter]
+    [CustomAuthorize("Admin")]
     public class StaffController : BaseController
     {
         // GET: Admin/Staff
@@ -43,19 +46,25 @@ namespace Project_Year_2.Areas.Admin.Controllers
                 
                 else
                 {
+                    try
+                    {
+                        var encryptMd5Pass = Common.Encryptor.MD5Hash(staff.Password);
+                        var encryptMd5ConPass = Common.Encryptor.MD5Hash(staff.ConfirmPassword);
+                        staff.Password = encryptMd5Pass;
+                        staff.ConfirmPassword = encryptMd5ConPass;
+                        long id = dao.Insert(staff);
+                        if (id > 0)
+                        {
+                            ViewBag.Success = "Đăng kí thành công";
+                            staff = new Account();
+                        }
+                        else
+                        {
+                            SetAlert("Thêm tài khoản không thành công", "error");
+                        }
+                    }
+                    catch (Exception) { }
                     
-                    var encryptMd5Pass = Common.Encryptor.MD5Hash(staff.Password);
-                    staff.Password = encryptMd5Pass;
-                    long id = dao.Insert(staff);
-                    if (id > 0)
-                    {
-                        ViewBag.Success = "Đăng kí thành công";
-                        staff = new Account();
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Thêm tài khoản nhân viên không thành công");
-                    }
                 }
                 
             }
@@ -100,7 +109,7 @@ namespace Project_Year_2.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Cập nhập tài khoản không thành công");
+                    SetAlert("Cập nhập tài khoản không thành công", "error");
                 }
             }
             return View("Home");
@@ -145,7 +154,7 @@ namespace Project_Year_2.Areas.Admin.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Cập nhập tài khoản không thành công");
+                SetAlert("Cập nhập tài khoản không thành công", "error");
             }
             return View();
         }
@@ -168,6 +177,11 @@ namespace Project_Year_2.Areas.Admin.Controllers
             {
                 status = result
             });
+        }
+        public ActionResult ResetPass(int ID)
+        {
+            new UserDao().ResetPass(ID);
+            return RedirectToAction("Home");
         }
     }
 }

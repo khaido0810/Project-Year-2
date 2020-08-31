@@ -11,30 +11,21 @@
 
 <div class="container-fluid">
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Bảng thông tin</h1>
-
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Thông tin của Đơn đặt bàn</h6>
         </div>
         <div class="card-body">
-
+            @Html.ActionLink("Tạo Đơn đặt bàn", "Create", "Order", new { @class = "btn btn-outline-info btn-sm site-animate" })
+            <hr>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Họ</th>
                             <th>Tên</th>
-                            <th>Email</th>
-                            <th>Số người</th>
-                            <th>Số điện thoại</th>
-                            <th>Ngày</th>
-                            <th>Giờ</th>
-                            <th>Lời nhắn</th>
+                            <th>Mô tả</th>
                             <th>Ngày tạo</th>
-                            <th>Trạng thái</th>
                             <th>Chỉnh sửa</th>
                         </tr>
                     </thead>
@@ -45,21 +36,15 @@
                             {
                                 <tr id="row_@item.ID_Table">
                                     @{ViewBag.ID_Table = item.ID_Table; }
-                                    <td>@item.FirstName</td>
                                     <td>@item.LastName</td>
-                                    <td>@item.Email</td>
-                                    <td>@item.PeopleCount</td>
-                                    <td>@item.PhoneNumber</td>
-                                    <td>@item.Date</td>
-                                    <td>@item.Time</td>
-                                    <td>@item.Message</td>
+                                    <td><a href="#" target="_blank" class="btn btn-info btn-sm" data-toggle="modal" data-target="#Model_@item.ID_Table">Chi tiết</a></td>
+                                    
                                     <td>@item.CreatedDate</td>
-                                    <td><a href="#" class="btn-active" data-id="@item.ID_Table">@(item.Status ? "Chờ" : "Xong")</a></td>
                                     <td>
                                         @Html.ActionLink("Sửa", "Edit", "Order", new { id = @item.ID_Table }, null)
                                         |
                                         @Html.ActionLink("Xóa", "Delete", "Order", new { id = @item.ID_Table }, null)
-                                        
+
                                     </td>
                                 </tr>
                             }
@@ -70,5 +55,116 @@
             </div>
         </div>
     </div>
-
 </div>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="modal fade" id="Model_@item.ID_Table" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12 p-5">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <small>ĐÓNG </small><span aria-hidden="true">&times;</span>
+                                </button>
+                                <br>
+                                <div class="mb-4">
+                                    <div class="form-group font-weight-bold">
+                                        <hr />
+                                        <h4>Chi tiết Đơn đặt bàn của khách hàng @item.LastName</h4>
+
+                                        <br>
+                                        <br>
+                                        <div>
+                                            <div>
+                                                <span class="col-md-8">Họ:</span>
+                                                @{ var name = "Trống";}
+                                                @if (@item.FirstName != null)
+                                                {
+                                                    name = @item.FirstName;
+                                                }
+                                                <input class="form-control col-md-9" value="@name" disabled>
+
+                                            </div>
+                                            <div>
+                                                <span class="col-md-8">Tên:</span>
+                                                @{ var lname = "Trống";}
+                                                @if (@item.LastName != null)
+                                                {
+                                                    lname = @item.LastName;
+                                                }
+                                                <input class="form-control col-md-9" value="@lname" disabled>
+
+                                            </div>
+                                            <div>
+                                                <span class="col-md-8">Số điện thoại:</span>
+                                                @{ var phone = "Trống";}
+                                                @if (@item.PhoneNumber != null)
+                                                {
+                                                    phone = @item.PhoneNumber;
+                                                }
+                                                <input class="form-control col-md-9" value="@phone" disabled>
+                                            </div>
+                                            <div>
+                                                <span class="col-md-8">Email:</span>
+                                                @{ var email = "Trống";}
+                                                @if (@item.Email != null)
+                                                {
+                                                    email = @item.Email;
+                                                }
+                                                <input class="form-control col-md-9" value="@email" disabled>
+                                            </div>
+                                            <div>
+                                                <span class="col-md-8">Số người:</span>
+                                                @{ int? count = 0;}
+                                                @if (@item.PeopleCount != null)
+                                                {
+                                                    count = @item.PeopleCount;
+                                                    <input class="form-control col-md-9" value="@count" disabled>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-control col-md-9" value="Trống" disabled>
+                                                }
+                                            </div>
+                                            <div>
+                                                <span class="col-md-8">Ngày:</span>
+                                                @{ var date = "Trống";}
+                                                @if (@item.Date != null)
+                                                {
+                                                    date = @item.Date;
+                                                    <input class="form-control col-md-9" value="@date" disabled>
+                                                }
+                                            </div>
+                                            <div>
+                                                <span class="col-md-8">Giờ:</span>
+                                                @{ var time = "Trống";}
+                                                @if (@item.Time != null)
+                                                {
+                                                    time = @item.Time;
+                                                }
+                                                <input class="form-control col-md-9" value="@time" disabled>
+                                            </div>
+                                            <div>
+                                                <span class="col-md-8">Lời nhắn:</span>
+                                                @{ var message = "Trống";}
+                                                @if (@item.Message != null)
+                                                {
+                                                    message = @item.Message;
+                                                }
+                                                <input class="form-control col-md-9" value="@message" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

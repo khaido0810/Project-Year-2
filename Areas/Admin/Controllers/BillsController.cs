@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Project_Year_2.Areas.Admin.Infrastructure;
 
 namespace Project_Year_2.Areas.Admin.Controllers
 {
+    [CustomAuthenticationFilter]
     public class BillsController : BaseController
     {
         private readonly QuanLyNhaHangDBContext db = new QuanLyNhaHangDBContext();
@@ -57,7 +59,6 @@ namespace Project_Year_2.Areas.Admin.Controllers
         public ActionResult Edit(int ID)
         {
             var bill = new BillDao().ViewDetail(ID);
-            TempData["ID_Table"] = ID;
             return View(bill);
         }
         [HttpPost]
@@ -71,7 +72,7 @@ namespace Project_Year_2.Areas.Admin.Controllers
                 if (result)
                 {
                     SetAlert("Cập nhập hóa đơn thành công", "success");
-                    return RedirectToAction("Index", "Menu");
+                    return RedirectToAction("Index", "Bills");
                 }
                 else
                 {
@@ -80,6 +81,7 @@ namespace Project_Year_2.Areas.Admin.Controllers
             }
             return View("Index");
         }
+        [CustomAuthorize("Admin","Manager")]
         public ActionResult Delete(int ID)
         {
             Bill_Infor bill = new BillDao().ViewDetail(ID);
@@ -115,10 +117,10 @@ namespace Project_Year_2.Areas.Admin.Controllers
                 {
                     bill.ID_Bill = ID_Bill;
                     bill.ID_Menu = itemID;
+                    
                     db.Bills.Add(bill);
                     db.SaveChanges();
                 }
-
             }
             return RedirectToAction("Index");
         }

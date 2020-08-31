@@ -16,7 +16,7 @@
         public string BillName { get; set; }
 
         [Display(Name = "Tổng số tiền")]
-        public int? Total { get; set; }
+        public double? Total { get; set; }
 
         [Column(TypeName = "date")]
         [Display(Name = "Ngày tạo")]

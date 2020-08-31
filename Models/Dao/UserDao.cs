@@ -1,6 +1,7 @@
 ﻿using Project_Year_2.Models.EF;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 
@@ -24,11 +25,8 @@ namespace Project_Year_2.Models.Dao
             try
             {
                 var user = context.Accounts.Find(entity.ID);
+                user.ConfirmPassword = user.Password;
                 user.User_Infor.Name = entity.User_Infor.Name;
-                if (!string.IsNullOrEmpty(entity.Password))
-                {
-                    user.Password = entity.Password;
-                }
                 user.User_Infor.Avatar = entity.User_Infor.Avatar;
                 user.User_Infor.PhoneNumber = entity.User_Infor.PhoneNumber;
                 user.User_Infor.IdentityID = entity.User_Infor.IdentityID;
@@ -40,6 +38,21 @@ namespace Project_Year_2.Models.Dao
                 return true;
             }
             catch(Exception)
+            {
+                return false;
+            }
+        }
+        public bool ChangeRole(Account entity)
+        {
+            var user = context.Accounts.Find(entity.ID);
+            user.ConfirmPassword = user.Password;
+            try
+            {
+                user.Role = entity.Role;
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
             {
                 return false;
             }
@@ -67,9 +80,13 @@ namespace Project_Year_2.Models.Dao
         {
             return context.Accounts.Where(x => x.Role == "Staff").ToList();
         }
+        public List<Account> ListAll()
+        {
+            return context.Accounts.ToList();
+        }
         public Account GetByName(string UserName)
         {
-            return context.Accounts.Where(x => x.UserName.Equals(UserName, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+            return context.Accounts.Where(x => x.UserName.Equals(UserName, StringComparison.CurrentCulture)).SingleOrDefault();
         }
         public Account ViewDetail(int ID)
         {
@@ -77,29 +94,7 @@ namespace Project_Year_2.Models.Dao
         }
         public int Login(string userName, string passWord)
         {
-            var result = context.Accounts.Where(x => x.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
-            if (result == null)
-            {
-                return 0;
-            }
-            else
-            {
-                if (result.Status == false)
-                {
-                    return -1;
-                }
-                else
-                {
-                    if (result.Password == passWord)
-                        return 1;
-                    else
-                        return -2;
-                }
-            }
-        }
-        public int Login_Staff(string userName, string passWord)
-        {
-            var result = context.Accounts.Where(x => x.UserName == userName && x.Role == "Staff").FirstOrDefault();
+            var result = context.Accounts.Where(x => x.UserName.Equals(userName,StringComparison.CurrentCulture)).SingleOrDefault();
             if (result == null)
             {
                 return 0;
@@ -123,6 +118,7 @@ namespace Project_Year_2.Models.Dao
         {
             var user = context.Accounts.Find(id);
             user.Status = !user.Status;
+            user.ConfirmPassword = user.Password;
             context.SaveChanges();
             return user.Status;
         }
@@ -134,8 +130,9 @@ namespace Project_Year_2.Models.Dao
         {
             try
             {
-                var dao = context.Accounts.Find(id);
-                dao.User_Infor.Avatar = account.User_Infor.Avatar;
+                var user = context.Accounts.Find(id);
+                user.ConfirmPassword = user.Password;
+                user.User_Infor.Avatar = account.User_Infor.Avatar;
                 context.SaveChanges();
                 return true;
             }
@@ -153,6 +150,15 @@ namespace Project_Year_2.Models.Dao
         public bool CheckEmail(string email)
         {
             return context.User_Infors.Count(x => x.Email == email) > 0;
+        }
+        public bool ResetPass(int ID)
+        {
+            var account = context.Accounts.Find(ID);
+            var encryptMd5Pass = Common.Encryptor.MD5Hash(Convert.ToString(123));
+            account.Password = encryptMd5Pass;
+            account.ConfirmPassword = encryptMd5Pass;
+            context.SaveChanges();
+            return true;
         }
     }
 }

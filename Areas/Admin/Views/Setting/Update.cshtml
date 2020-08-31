@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model Project_Year_2.Models.EF.Account
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 m-5 bg-light">
+            <div class="panel panel-default">
+                <div class="panel-heading font-weight-bolder">
+                    <h3>
+
+                        Cập nhập thông tin cá nhân
+                    </h3>
+                    <hr />
+                </div>
+                <div class="panel-body">
+
+                    <div class="shadow p-4 mb-4 bg-white">
+                        @using (Html.BeginForm("Update", "Setting", FormMethod.Post, new { @Id = "Form1" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                            <div class="form-group font-weight-bold">
+                                @Html.LabelFor(model => model.User_Infor.Name, htmlAttributes: new { @class = "control-label col-md-10" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.User_Infor.Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.User_Infor.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group font-weight-bold">
+                                @Html.LabelFor(model => model.User_Infor.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-10" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.User_Infor.PhoneNumber, new { @class = "form-control", @type = "number" })
+                                    @Html.ValidationMessageFor(model => model.User_Infor.PhoneNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group font-weight-bold">
+                                @Html.LabelFor(model => model.User_Infor.IdentityID, htmlAttributes: new { @class = "control-label col-md-10" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.User_Infor.IdentityID, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.User_Infor.IdentityID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group font-weight-bold">
+                                @Html.LabelFor(model => model.User_Infor.Address, htmlAttributes: new { @class = "control-label col-md-10" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.User_Infor.Address, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.User_Infor.Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group font-weight-bold">
+                                @Html.LabelFor(model => model.User_Infor.Email, htmlAttributes: new { @class = "control-label col-md-10" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.User_Infor.Email, new { @class = "form-control", @type = "email" })
+                                    @Html.ValidationMessageFor(model => model.User_Infor.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group font-weight-bold">
+                                @Html.LabelFor(model => model.User_Infor.BirthDay, htmlAttributes: new { @class = "control-label col-md-10" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.User_Infor.BirthDay, new { @class = "form-control", @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.User_Infor.BirthDay, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="row text-center">
+                                <div class="col-md-3 form-group">
+                                    <input value="Cập nhập" type="button" id="1stButton" class="btn btn-default btn-rounded bg-primary text-white" data-toggle="modal" data-target="#ConfirmModal" />
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    @Html.ActionLink("Hủy", "Index", "Setting", new { @class = "btn btn-secondary" })
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="form-group">
+
+                                                    <div class="form-group font-weight-bold">
+                                                        @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-10" })
+                                                        <div class="col-md-10">
+                                                            @Html.PasswordFor(model => model.Password, new { @class = "form-control ", Value = "" })
+                                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group font-weight-bold">
+                                                        @Html.LabelFor(model => model.ConfirmPassword, new { @class = "control-label col-md-10" })
+                                                        <div class="col-md-10">
+                                                            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control ", Value = "" })
+                                                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-md-offset-2 col-md-6 ">
+                                                            <input type="submit" value="Xác nhận" id="2stButton" class="btn btn-default bg-primary text-white" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

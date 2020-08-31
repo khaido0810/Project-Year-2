@@ -9,7 +9,9 @@
         <div class="col-md-6 m-5 bg-light">
             <div class="panel panel-default">
                 <div class="panel-heading font-weight-bolder">
-                    Nhập thông tin Món ăn
+                    <h3>
+                        Nhập thông tin Món ăn
+                    </h3>
                     <hr />
                 </div>
                 <div class="panel-body">
@@ -28,7 +30,7 @@
                             <div class="form-group font-weight-bold">
                                 @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-10" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control " })
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control ", @required = "required" })
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -36,7 +38,7 @@
                             <div class="form-group font-weight-bold">
                                 @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-10" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @required = "required" })
                                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -68,21 +70,20 @@
                             <div class="form-group font-weight-bold">
                                 @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-10" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @required = "required" })
                                     @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            @Html.HiddenFor(model => model.Hot, new { @Value = "False" })
 
                             @Html.HiddenFor(model => model.Status, new { @Value = "True" })
 
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-6 ">
-                                    <input type="submit" value="Thêm món ăn" class="btn btn-default bg-primary text-white" />
+                            <div class="row text-center">
+                                <div class="col-md-3 form-group">
+                                    <input type="submit" value="Thêm mới" class="btn btn-default bg-primary text-white" />
                                 </div>
-                            </div>
-                            <div>
-                                @Html.ActionLink("Back to List", "Index")
+                                <div class="col-md-2 form-group">
+                                    @Html.ActionLink("Hủy", "Index", "Menu", new { @class = "btn btn-secondary" })
+                                </div>
                             </div>
                         }
 

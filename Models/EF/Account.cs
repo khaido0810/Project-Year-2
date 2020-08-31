@@ -12,11 +12,16 @@
     {
         public long ID { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         [Display(Name = "Tài khoản")]
         public string UserName { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
+        [Display(Name = "Nhập lại Mật khẩu")]
+        [NotMapped]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
+        [StringLength(150)]
         [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
         [Display(Name = "Ngày tạo")]

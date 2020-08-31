@@ -264,3 +264,11 @@ E:\IT\Project_Restaurant Management\Project-Year-2\obj\Debug\Project Year 2.cspr
 E:\IT\Project_Restaurant Management\Project-Year-2\obj\Debug\Project Year 2.csproj.CopyComplete
 E:\IT\Project_Restaurant Management\Project-Year-2\obj\Debug\Project Year 2.dll
 E:\IT\Project_Restaurant Management\Project-Year-2\obj\Debug\Project Year 2.pdb
+E:\IT\Project_Restaurant Management\Project-Year-2\bin\Microsoft.AspNetCore.Cryptography.Internal.dll
+E:\IT\Project_Restaurant Management\Project-Year-2\bin\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+E:\IT\Project_Restaurant Management\Project-Year-2\bin\Microsoft.Extensions.Identity.Core.dll
+E:\IT\Project_Restaurant Management\Project-Year-2\bin\Microsoft.Extensions.Identity.Stores.dll
+E:\IT\Project_Restaurant Management\Project-Year-2\bin\Microsoft.AspNetCore.Cryptography.Internal.xml
+E:\IT\Project_Restaurant Management\Project-Year-2\bin\Microsoft.AspNetCore.Cryptography.KeyDerivation.xml
+E:\IT\Project_Restaurant Management\Project-Year-2\bin\Microsoft.Extensions.Identity.Core.xml
+E:\IT\Project_Restaurant Management\Project-Year-2\bin\Microsoft.Extensions.Identity.Stores.xml

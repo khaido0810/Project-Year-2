@@ -10,7 +10,10 @@
         <div class="col-md-6 m-5 bg-light">
             <div class="panel panel-default">
                 <div class="panel-heading font-weight-bolder">
-                    Thêm mới thông tin Quản lí
+                    <h3>
+                        Thêm mới thông tin Quản lí
+
+                    </h3>
                     <hr />
                 </div>
                 <div class="panel-body">
@@ -83,13 +86,13 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-6 ">
+                            <div class="row text-center">
+                                <div class="col-md-3 form-group">
                                     <input type="submit" value="Đăng kí" class="btn btn-default bg-primary text-white" />
                                 </div>
-                            </div>
-                            <div>
-                                @Html.ActionLink("Back to List", "Home")
+                                <div class="col-md-2 form-group">
+                                    @Html.ActionLink("Hủy", "Home", "Manager", new { @class = "btn btn-primary" })
+                                </div>
                             </div>
                         }
 

@@ -30,9 +30,6 @@
         [Display(Name = "Trạng thái")]
         public bool Status { get; set; }
 
-        [Display(Name = "Độ ưa thích")]
-        public bool Hot { get; set; }
-
         [StringLength(100)]
 
         [Display(Name = "Loại")]

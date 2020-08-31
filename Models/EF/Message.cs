@@ -23,6 +23,7 @@
         [Column("Message")]
 
         [Display(Name = "Lời nhắn")]
+        [Required]
         public string Message1 { get; set; }
 
         [Display(Name = "Ngày tạo")]

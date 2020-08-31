@@ -6,18 +6,19 @@
 @model  IEnumerable<Project_Year_2.Models.EF.Menu>
 @section jsFooter{
     <script src="~/Assets/Admin/js/Controller/MenuController.js"></script>
-    <script src="~/Assets/Admin/js/Controller/ChangeHot.js"></script>
 }
 <div class="container-fluid">
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Thông tin của Lời nhắn</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Thông tin của Thực đơn</h6>
         </div>
         <div class="card-body">
 
             <div class="table-responsive">
+                @Html.ActionLink("Thêm món ăn", "Create", "Menu", new { @class = "btn btn-outline-info btn-sm site-animate" })
+                <hr>
                 <table class="table table-bordered" id="dataTable" cellspacing="0">
                     <thead>
                         <tr>
@@ -26,7 +27,6 @@
                             <th>Đường dẫn ảnh</th>
                             <th>Giá tiền</th>
                             <th>Loại</th>
-                            <th>Độ hot</th>
                             <th>Tình trạng</th>
                             <th>Chỉnh sửa</th>
                         </tr>
@@ -37,23 +37,38 @@
                             foreach (var item in Model)
                             {
                                 <tr id="row_@item.ID_Menu">
-                                    
+
                                     <td>@item.Name</td>
-                                    <td>@item.Description</td>
-                                    
+                                    <td style="width:200px">@item.Description</td>
                                     <td>
                                         @if (item.ImagePath != null)
                                         {
-                                            <img class="img-profile rounded" src="@Url.Content(item.ImagePath)" width="250" height="250">
+                                            <img class="img-profile rounded" src="@Url.Content(item.ImagePath)" width="200" height="200">
                                         }
                                         else
                                         {
                                             <div>Trống</div>
                                         }
                                     </td>
-                                    <td>@item.Price</td>
-                                    <td>@item.Type</td>
-                                    <td><a href="#" class="btn-active" data-id="@item.ID_Menu">@(item.Hot ? "Còn" : "Hết")</a></td>
+                                    <td>$@item.Price</td>
+                                    <td>
+                                        @if (item.Type == "Breakfast")
+                                        {
+                                            <div>Bữa sáng</div>
+                                        }
+                                        else if (item.Type == "Lunch")
+                                        {
+                                            <div>Bữa trưa</div>
+                                        }
+                                        else if (item.Type == "Dinner")
+                                        {
+                                            <div>Bữa tối</div>
+                                        }
+                                        else
+                                        {
+                                            <div>Trống</div>
+                                        }
+                                    </td>
                                     <td><a href="#" class="btn-active" data-id="@item.ID_Menu">@(item.Status ? "Còn" : "Hết")</a></td>
 
                                     <td>

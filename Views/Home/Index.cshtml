@@ -113,18 +113,18 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-success" })
                     <div class="form-group">
                         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label sr-only" })
-                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Tên" })
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Tên", @required = "required" })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label sr-only" })
-                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email", id = "email", @type = "email" })
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email", id = "email", @type = "email", @required = "required" })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.Message1, htmlAttributes: new { @class = "control-label sr-only" })
-                        @Html.TextAreaFor(model => model.Message1, new { @class = "form-control", @placeholder = "Để lại lời nhắn", @id = "message", @cols = "30", @rows = "10" })
+                        @Html.TextAreaFor(model => model.Message1, new { @class = "form-control", @placeholder = "Để lại lời nhắn", @id = "message", @cols = "30", @rows = "10", @required = "required" })
                         @Html.ValidationMessageFor(model => model.Message1, "", new { @class = "text-danger" })
                     </div>
                     @Html.HiddenFor(model => model.CreatedDate, new { @Value = DateTime.Now.ToShortDateString() })
@@ -140,7 +140,7 @@
                 <p class="text-black">
                     Địa chỉ: <br> XX đường YY , thành phố ZZ <br> Việt Nam <br> <br>
                     Số điện thoại: <br> (0123)-456-789 <br> <br>
-                    Email: <br> <a href="mailto:info@myrestaurant.com">info@myrestaurant.com</a>
+                    Email: <br> <a href="mailto:myrestaurantproject2020@gmail.com">myrestaurantproject2020@gmail.com</a>
                 </p>
 
             </div>

@@ -47,6 +47,11 @@ namespace Project_Year_2.Models.Dao
         {
             return context.Bill_Infor.Find(ID);
         }
+        public double? ViewTotal(int ID)
+        {
+            var bill = context.Menus.Find(ID);
+            return bill.Price;
+        }
         public IEnumerable<Bill> Detail(int ID)
         {
             return context.Bills.Include(b => b.Bill_Infor).Include(b => b.Menu).Where(x=>x.ID_Bill == ID);

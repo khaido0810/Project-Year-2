@@ -1,4 +1,5 @@
-﻿using Project_Year_2.Models.Dao;
+﻿using Project_Year_2.Areas.Admin.Infrastructure;
+using Project_Year_2.Models.Dao;
 using Project_Year_2.Models.EF;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ using System.Web.Mvc;
 
 namespace Project_Year_2.Areas.Admin.Controllers
 {
+    [CustomAuthenticationFilter]
+    [CustomAuthorize("Admin","Manager")]
     public class MenuController : BaseController
     {
         // GET: Admin/Menu
@@ -118,16 +121,5 @@ namespace Project_Year_2.Areas.Admin.Controllers
                 status = result
             });
         }
-        [HttpPost]
-        public JsonResult ChangeHot(long id)
-        {
-            var result = new MenuDao().ChangeHot(id);
-            return Json(new
-            {
-                hot = result
-            });
-        }
-
-
     }
 }

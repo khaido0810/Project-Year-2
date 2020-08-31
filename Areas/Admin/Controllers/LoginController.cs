@@ -23,14 +23,14 @@ namespace Project_Year_2.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
                 var dao = new UserDao();
-                var result = dao.Login(model.UserName, Encryptor.MD5Hash(model.Password));
-                
+                var result = dao.Login(model.UserName, Encryptor.MD5Hash(model.Password));             
                 if (result == 1)
                 {
                     var user = dao.GetByName(model.UserName);
@@ -39,13 +39,41 @@ namespace Project_Year_2.Areas.Admin.Controllers
                         UserName = user.UserName,
                         UserID = user.ID
                     };
-                    //Session["UserName"] = user.Name.ToString();
+                    if (user.User_Infor != null)
+                    {
+                        Session["UserName"] = user.User_Infor.Name.ToString();
+                    }
+                    else
+                    {
+                        Session["UserName"] = "User";
+                    }
                     Session["IDName"] = user.ID.ToString();
                     Session["User"] = user.UserName.ToString();
-                    Session["Avatar"] = user.User_Infor.Avatar.ToString();
-                    var claims = new List<Claim>();
-                    claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserName));
+                    Session["Role"] = user.Role.ToString();
+                    if (user.User_Infor != null)
+                    {
+                        Session["Avatar"] = user.User_Infor.Avatar.ToString();
+                    }
+                    else
+                    {
+                        Session["Avatar"] = "/Assets/Admin/img/Default_Avatar.png";
+                    }
+                    
                     Session.Add("USER_SESSION", userSession);
+                    if (model.RememberMe)
+                    {
+                        // They do, so let's create an authentication cookie
+                        var cookie = FormsAuthentication.GetAuthCookie(model.UserName, model.RememberMe);
+                        // Since they want to be remembered, set the expiration for 30 days
+                        cookie.Expires = DateTime.Now.AddDays(30);
+                        // Store the cookie in the Response
+                        Response.Cookies.Add(cookie);
+                    }
+                    else
+                    {
+                        // Otherwise set the cookie as normal
+                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 else if(result == 0)

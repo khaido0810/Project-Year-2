@@ -12,7 +12,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Thông tin chi tiết của Hóa đơn</h6>
             </div>
             <div class="card-body">
-
+                @Html.ActionLink("Quay trở lại", "Index", "Bills", new { @class = "btn btn-outline-info btn-sm site-animate" })
                 <div class="card-body">
 
                     <div class="table-responsive">
@@ -25,7 +25,6 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.Menu.Name)
                                     </th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>

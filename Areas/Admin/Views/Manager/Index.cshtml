@@ -7,7 +7,7 @@
 @model IEnumerable<Project_Year_2.Models.EF.Account>
 
 @section jsFooter{
-    <script src="~/Assets/Admin/js/Controller/UserController.js"></script>
+    <script src="~/Assets/Admin/js/Controller/ManagerController.js"></script>
 }
 
 <div class="card shadow mb-4">
@@ -56,7 +56,7 @@
                                     {
                                         <div>Trống</div>
                                     }
-                                    
+
                                 }
                                 else
                                 {
@@ -67,19 +67,7 @@
                             <td>@item.CreatedBy</td>
                             <td><a href="#" class="btn-active" data-id="@item.ID">@(item.Status ? "Kích hoạt" : "Khóa")</a></td>
                             <td>
-                                @if (@item.User_Infor == null)
-                                {
-                                    @Html.ActionLink("Thêm thông tin", "AddInfor", "Manager", new { id = @item.ID }, null)
-                                    <span>|</span>
-                                }
-                                @if (@item.User_Infor != null)
-                                {
-                                    @Html.ActionLink("Sửa", "Edit", "Manager", new { id = @item.ID }, null)
-                                    <span>|</span>
-                                }
-                                @Html.ActionLink("Xóa", "Delete", "Manager", new { id = @item.ID }, null)
-                                
-
+                                <a href="#" target="_blank" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#Model_@item.ID">Cài đặt</a>
                             </td>
                         </tr>
                     }
@@ -88,4 +76,51 @@
         </div>
     </div>
 </div>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="modal fade" id="Model_@item.ID" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12 p-5">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <small>ĐÓNG </small><span aria-hidden="true">&times;</span>
+                                </button>
+                                <br>
+                                <div class="mb-4">
+                                    <div class="form-group font-weight-bold">
+                                        <hr />
+                                        <h4>Cài đặt tài khoản @item.UserName</h4>
+                                        
+                                        <br>
+                                        <br>
+                                        <div>
+                                            @if (@item.User_Infor == null)
+                                            {
+                                                @Html.ActionLink("Thêm thông tin", "AddInfor", "Manager", new { id = @item.ID }, null)
+                                            }
+                                            @if (@item.User_Infor != null)
+                                            {
+                                                @Html.ActionLink("Sửa thông tin", "Edit", "Manager", new { id = @item.ID }, null)
+                                            }
+                                        </div>
+                                        <div>
+                                            @Html.ActionLink("Xóa", "Delete", "Manager", new { id = @item.ID }, null)
+                                        </div>
+
+                                        <div>@Html.ActionLink("Reset mật khẩu", "ResetPass", "Manager", new { id = @item.ID }, null)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
 

@@ -1,10 +1,12 @@
-﻿using Project_Year_2.Models.Dao;
+﻿using Project_Year_2.Areas.Admin.Infrastructure;
+using Project_Year_2.Models.Dao;
 using Project_Year_2.Models.EF;
 using System;
 using System.Web.Mvc;
 
 namespace Project_Year_2.Areas.Admin.Controllers
 {
+    [CustomAuthenticationFilter]
     public class MessageController : BaseController
     {
         // GET: Admin/Message
@@ -24,6 +26,8 @@ namespace Project_Year_2.Areas.Admin.Controllers
             });
 
         }
+
+        [CustomAuthorize("Admin","Manager")]
         public ActionResult Delete(int ID)
         {
             Message message = new MessageDao().ViewDetail(ID);

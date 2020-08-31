@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model Project_Year_2.Areas.Admin.Models.SettingModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 m-5 bg-light">
+            <div class="panel panel-default">
+                <div class="panel-heading font-weight-bolder">
+                    <h3>
+
+                        Cập nhập thông tin cá nhân  
+                    </h3>
+                    <hr />
+                </div>
+                <div class="panel-body">
+
+                    <div class="shadow p-4 mb-4 bg-white">
+                        @using (Html.BeginForm("Change", "Setting", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="form-group font-weight-bold">
+                                @Html.LabelFor(model => model.OldPassword, new { @class = "control-label col-md-10" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(model => model.OldPassword, new { @class = "form-control ", Value = "" })
+                                    @Html.ValidationMessageFor(model => model.OldPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group font-weight-bold">
+                                @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-10" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control ", Value = "" })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group font-weight-bold">
+                                @Html.LabelFor(model => model.ConfirmPassword, new { @class = "control-label col-md-10" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "form-control ", Value = "" })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="row text-center">
+                                <div class="col-md-3 form-group">
+                                    <input type="submit" value="Xác nhận" class="btn btn-default bg-primary text-white" />
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    @Html.ActionLink("Hủy", "Index", "Setting", new { @class = "btn btn-secondary" })
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

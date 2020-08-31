@@ -5,10 +5,6 @@
 
 @model IEnumerable<Project_Year_2.Models.EF.Account>
 
-@section jsFooter{
-    <script src="~/Assets/Admin/js/Controller/UserController.js"></script>
-}
-
 <div class="container-fluid">
 
     <!-- DataTales Example -->
@@ -17,18 +13,14 @@
             <h6 class="m-0 font-weight-bold text-primary">Thông tin của Quản lí</h6>
         </div>
         <div class="card-body">
-
+            @Html.ActionLink("Tạo Tài khoản", "Create", "Manager", new { @class = "btn btn-outline-info btn-sm site-animate" })
+            <hr>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Tài khoản</th>
-                            <th>Họ và Tên</th>
-                            <th>Số điện thoại</th>
-                            <th>Địa chỉ</th>
-                            <th>CMND</th>
-                            <th>Ngày sinh</th>
-                            <th>Email</th>
+                            <th>Chi tiết</th>
                             <th>Ngày tạo</th>
                             <th>Người tạo</th>
                             <th>Trạng thái</th>
@@ -41,69 +33,10 @@
                             {
                                 <tr id="row_@item.ID">
                                     <td>@item.UserName</td>
-                                    <td>
-                                        @if (@item.User_Infor != null)
-                                        {
-                                            @item.User_Infor.Name
-                                        }
-                                        else
-                                        {
-                                            <div>Trống</div>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (@item.User_Infor != null)
-                                        {
-                                            @item.User_Infor.PhoneNumber
-                                        }
-                                        else
-                                        {
-                                            <div>Trống</div>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (@item.User_Infor != null)
-                                        {
-                                            @item.User_Infor.Address
-                                        }
-                                        else
-                                        {
-                                            <div>Trống</div>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (@item.User_Infor != null)
-                                        {
-                                            @item.User_Infor.IdentityID
-                                        }
-                                        else
-                                        {
-                                            <div>Trống</div>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (@item.User_Infor != null)
-                                        {
-                                            @item.User_Infor.BirthDay
-                                        }
-                                        else
-                                        {
-                                            <div>Trống</div>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (@item.User_Infor != null)
-                                        {
-                                            @item.User_Infor.Email
-                                        }
-                                        else
-                                        {
-                                            <div>Trống</div>
-                                        }
-                                    </td>
+                                    <td><a href="#" target="_blank" class="btn btn-info btn-sm" data-toggle="modal" data-target="#Model_@item.ID">Chi tiết</a></td>
                                     <td>@item.CreatedDate</td>
                                     <td>@item.CreatedBy</td>
-                                    <td><a href="#" class="btn-active" data-id="@item.ID">@(item.Status ? "Kích hoạt" : "Khóa")</a></td>
+                                    <td>@(item.Status ? "Kích hoạt" : "Khóa")</td>
 
                                 </tr>
                             }
@@ -113,5 +46,100 @@
             </div>
         </div>
     </div>
-
 </div>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="modal fade" id="Model_@item.ID" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="bg-image" style="background-image: url(/Assets/Client/images/reservation_1.jpg);"></div>
+                            </div>
+                            <div class="col-lg-12 p-5">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <small>ĐÓNG </small><span aria-hidden="true">&times;</span>
+                                </button>
+                                <br>
+                                <div class="mb-4">
+                                    <div class="form-group font-weight-bold">
+                                        <hr />
+                                        <h3 class="text-center">Thông tin chi tiết của @item.UserName</h3>
+                                        <br>
+                                        <br>
+                                        <div>
+                                            <span class="col-md-8">Họ tên:</span>
+                                            @{ var name = "Trống";}
+                                            @if (@item.User_Infor != null && @item.User_Infor.Name != null)
+                                            {
+                                                name = @item.User_Infor.Name;
+                                            }
+                                            <input class="form-control col-md-5" value="@name" disabled>
+
+                                        </div>
+                                        <div>
+                                            <span class="col-md-8">Số điện thoại:</span>
+                                            @{ int? phone = 0;}
+                                            @if (@item.User_Infor != null && @item.User_Infor.PhoneNumber != null)
+                                            {
+                                                phone = @item.User_Infor.PhoneNumber;
+                                                <input class="form-control col-md-5" value="@phone" disabled>
+                                            }
+                                            else
+                                            {
+                                                <input class="form-control col-md-5" value="Trống" disabled>
+                                            }
+                                        </div>
+                                        <div>
+                                            <span class="col-md-8">Địa chỉ:</span>
+                                            @{ var address = "Trống";}
+                                            @if (@item.User_Infor != null && @item.User_Infor.Address != null)
+                                            {
+                                                address = @item.User_Infor.Address;
+                                            }
+                                            <input class="form-control col-md-5" value="@address" disabled>
+                                        </div>
+                                        <div>
+                                            <span class="col-md-8">CMND:</span>
+                                            @{ var ID = "Trống";}
+                                            @if (@item.User_Infor != null && @item.User_Infor.IdentityID != null)
+                                            {
+                                                ID = @item.User_Infor.IdentityID;
+                                            }
+                                            <input class="form-control col-md-5" value="@ID" disabled>
+                                        </div>
+                                        <div>
+                                            <span class="col-md-8">Ngày sinh:</span>
+                                            @{ DateTime? dob = null;}
+                                            @if (@item.User_Infor != null && @item.User_Infor.BirthDay != null)
+                                            {
+                                                dob = @item.User_Infor.BirthDay;
+                                                <input class="form-control col-md-5" value="@dob" disabled>
+                                            }
+                                            else
+                                            {
+                                                <input class="form-control col-md-5" value="Trống" disabled>
+                                            }
+                                        </div>
+                                        <div>
+                                            <span class="col-md-8">Email:</span>
+                                            @{ var email = "Trống";}
+                                            @if (@item.User_Infor != null && @item.User_Infor.Email != null)
+                                            {
+                                                email = @item.User_Infor.Email;
+                                            }
+                                            <input class="form-control col-md-5" value="@email" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

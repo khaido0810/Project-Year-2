@@ -6,6 +6,7 @@ namespace Project_Year_2.Models.EF
     using System.Linq;
     using Project_Year_2.Models.EF;
 
+
     public partial class QuanLyNhaHangDBContext : DbContext
     {
         public QuanLyNhaHangDBContext()
@@ -13,7 +14,6 @@ namespace Project_Year_2.Models.EF
         {
         }
 
-        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Bill_Infor> Bill_Infor { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
@@ -24,17 +24,6 @@ namespace Project_Year_2.Models.EF
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Admin>()
-                .Property(e => e.UserName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admin>()
-                .Property(e => e.Password)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admin>()
-                .Property(e => e.Avatar)
-                .IsUnicode(false);
 
             modelBuilder.Entity<Account>()
                 .Property(e => e.UserName)

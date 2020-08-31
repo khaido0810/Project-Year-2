@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Authorized";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+    <script src="~/Assets/Admin/js/Controller/UserController.js"></script>
+}
+@model IEnumerable<Project_Year_2.Models.EF.Account>
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Thông tin của Tài khoản</h6>
+        </div>
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Tài khoản</th>
+                            <th>Vai trò</th>
+                            <th>Chỉnh sửa</th>
+                        </tr>
+                    </thead>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr id="row_@item.ID">
+                                <td>@item.UserName</td>
+                                <td>@item.Role</td>
+                                <td>
+                                    @if (item.Role != "Admin")
+                                    {
+                                        @Html.ActionLink("Thay đổi vai trò", "Change", "Authorized", new { id = item.ID }, null)
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

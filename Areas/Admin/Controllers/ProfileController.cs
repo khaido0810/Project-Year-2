@@ -15,23 +15,27 @@ namespace Project_Year_2.Areas.Admin.Controllers
         public ActionResult Index()
         {
             int id = int.Parse(Session["IDName"].ToString());
-            var account = new AdminDao().ViewDetail(id);
+            var account = new UserDao().ViewDetail(id);
             return View(account);
         }
         [HttpPost]
-        public ActionResult Index(Project_Year_2.Models.EF.Admin account)
+        public ActionResult Index(Account account)
         {
-            if (account.AvatarFile != null)
+            if (account.User_Infor.AvatarFile != null)
             {
-                string fileName = Path.GetFileNameWithoutExtension(account.AvatarFile.FileName);
-                string extension = Path.GetExtension(account.AvatarFile.FileName);
+                string fileName = Path.GetFileNameWithoutExtension(account.User_Infor.AvatarFile.FileName);
+                string extension = Path.GetExtension(account.User_Infor.AvatarFile.FileName);
                 fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                account.Avatar = "~/Assets/Admin/img/" + fileName;
+                account.User_Infor.Avatar = "~/Assets/Admin/img/" + fileName;
                 fileName = Path.Combine(Server.MapPath("~/Assets/Admin/img/"), fileName);
-                account.AvatarFile.SaveAs(fileName);
+                account.User_Infor.AvatarFile.SaveAs(fileName);
+            }
+            else
+            {
+                account.User_Infor.Avatar = "/Assets/Admin/img/Default_Avatar.png";
             }
             int id = int.Parse(Session["IDName"].ToString());
-            var user = new AdminDao().UpdateAvatar(id, account);
+            var user = new UserDao().UpdateAvatar(id, account);
             if (user)
             {
                 SetAlert("Cập nhập ảnh đại diện thành công", "success");
@@ -40,9 +44,7 @@ namespace Project_Year_2.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("", "Cập nhập tài khoản không thành công");
             }
-            var image = account.Avatar.ToString();
-            image = image.Substring(1);
-            Session["Avatar"] = image;
+            Session["Avatar"] = account.User_Infor.Avatar.ToString();
             return View(account);
         }
     }

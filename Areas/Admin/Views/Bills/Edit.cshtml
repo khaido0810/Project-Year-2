@@ -10,7 +10,10 @@
         <div class="col-md-6 m-5 bg-light">
             <div class="panel panel-default">
                 <div class="panel-heading font-weight-bolder">
-                    Cập nhập thông tin Hóa đơn
+                    <h3>
+                        Cập nhập thông tin Hóa đơn
+
+                    </h3>
                     <hr />
                 </div>
                 <div class="panel-body">
@@ -25,17 +28,17 @@
                             <div class="form-group font-weight-bold">
                                 @Html.LabelFor(model => model.BillName, htmlAttributes: new { @class = "control-label col-md-10" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.BillName, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                    @Html.EditorFor(model => model.BillName, new { htmlAttributes = new { @class = "form-control" } })
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-6 ">
+                            <div class="row text-center">
+                                <div class="col-md-3 form-group">
                                     <input type="submit" value="Cập nhập" class="btn btn-default bg-primary text-white" />
                                 </div>
-                            </div>
-                            <div>
-                                @Html.ActionLink("Back to List", "Index")
+                                <div class="col-md-2 form-group">
+                                    @Html.ActionLink("Hủy", "Index", "Bills", new { @class = "btn btn-primary" })
+                                </div>
                             </div>
                         }
 
